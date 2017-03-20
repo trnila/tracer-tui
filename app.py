@@ -16,11 +16,12 @@ class Procese(urwid.ListBox):
 
 
 class DataProcess:
-    def __init__(self, data):
+    def __init__(self, data, depth):
         self.data = data
+        self.depth = depth
 
     def __str__(self):
-        return "[{}] {}".format(self.data['pid'], self.data['executable'])
+        return "[{}] {} {}".format(self.data['pid'], self.depth * "  ", self.data['executable'])
 
 
 class App:
@@ -30,8 +31,14 @@ class App:
             ('h2', 'dark cyan', 'black', 'bold'),
         ]
 
+        def depth(pid):
+            if pid:
+                return depth(data['processes'][str(pid)]['parent']) + 1
+
+            return 0
+
         proc = [
-            DataProcess(proc)
+            DataProcess(proc, depth(pid) - 1)
             for pid, proc in data['processes'].items()
             ]
 
