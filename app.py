@@ -62,10 +62,6 @@ class App:
         self.loop.stop()
         os.system("vim " + path)
         self.loop.start()
-        self.loop.widget._invalidate()
-        self.loop.draw_screen()
-        # self.file.open(path)
-        # self.render(self.file)
 
     def run(self):
         self.loop.run()
