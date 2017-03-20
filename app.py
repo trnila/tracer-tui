@@ -59,7 +59,9 @@ class App:
         self.render(self.process)
 
     def open_file(self, path):
-        os.system("hachoir-urwid " + path)
+        self.loop.stop()
+        os.system("vim " + path)
+        self.loop.start()
         self.loop.widget._invalidate()
         self.loop.draw_screen()
         # self.file.open(path)
