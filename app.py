@@ -25,7 +25,8 @@ class DataProcess:
 
 
 class App:
-    def __init__(self):
+    def __init__(self, location):
+        self.location = location
         palette = [
             ('reveal focus', 'black', 'dark cyan', 'standout'),
             ('h2', 'dark cyan', 'black', 'bold'),
@@ -65,9 +66,9 @@ class App:
         self.process.populate(data['processes'][str(pid)])
         self.render(self.process)
 
-    def open_file(self, path):
+    def open_file(self, path, program="vim"):
         self.loop.stop()
-        os.system("vim " + path)
+        os.system(program + " " + os.path.join(self.location, path))
         self.loop.start()
 
     def run(self):
@@ -81,7 +82,8 @@ class App:
 
 import json
 
-data = json.load(open("/tmp/data.json"))
+location = "/tmp/result"
+data = json.load(open(location + "/data.json"))
 
-app = App()
+app = App(location)
 app.run()
